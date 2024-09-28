@@ -18,7 +18,10 @@ def download(url, last_version):
 # Get Data only if a new version is available                
 def get_data():
     response = requests.get(gh_latest_release)
-    last_version = response.json()["name"]
+    data = response.json()
+    if "name" not in data: 
+        return
+    last_version = data["name"]
     print(f"f1-data > Fetching Version\t\t({last_version})")
     url = f'https://github.com/f1db/f1db/releases/download/{last_version}/f1db-csv.zip'
 
