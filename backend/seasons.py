@@ -195,7 +195,7 @@ def createSeasonDriverPlot(radio_button_value="positionNumber", slider_value=[19
     df_drivers_info.rename(columns={"id":"driverId", "name": "driverName"}, inplace=True)
     data_in_range = pd.merge(data_in_range, df_drivers_info, on="driverId", how="left")
     
-    title = "Positions" if radio_button_value == "positionNumber" else "Points"
+    title = "Position" if radio_button_value == "positionNumber" else "Points"
     # Create the line chart
     fig = px.line(data_in_range, 
         x="year", 

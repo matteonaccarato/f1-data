@@ -1,4 +1,3 @@
-import pandas as pd
 import requests, zipfile, io
 
 gh_latest_release = 'https://api.github.com/repos/f1db/f1db/releases/latest'
@@ -20,7 +19,7 @@ def download(url, last_version):
 def get_data():
     response = requests.get(gh_latest_release)
     last_version = response.json()["name"]
-    print(f"f1-data > Fetching Version\t({last_version})")
+    print(f"f1-data > Fetching Version\t\t({last_version})")
     url = f'https://github.com/f1db/f1db/releases/download/{last_version}/f1db-csv.zip'
 
     try:
