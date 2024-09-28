@@ -357,6 +357,8 @@ def circuits_update_qualifying(circuitsIds):
     # Y-axis values
     tickvals = np.logspace(np.log10(df['timeMillis'].min()), np.log10(df['timeMillis'].max()), num=5, base=10)
     ticktext = [f1db_utils.ms_to_time(val) for val in tickvals]
+    colors = f1db_utils.custom_colors.copy()
+    colors[0] = "gold"
     return px.line(
         df,
         x = "year",
@@ -372,7 +374,7 @@ def circuits_update_qualifying(circuitsIds):
             "driverName": True,
             "qualifyingFormat": True
         },
-        color_discrete_sequence=f1db_utils.custom_colors,
+        color_discrete_sequence=colors,
         template = f1db_utils.template
     ).update_layout(
         f1db_utils.transparent_bg,
