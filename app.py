@@ -22,6 +22,7 @@ import backend.teams as teams
 import backend.f1db_utils as f1db_utils
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
+server = app.server
 
 # TABS STRUCTURE
 tabs = ["seasons", "circuits", "drivers", "teams"]
@@ -600,4 +601,4 @@ def update_option_dropdown(radio_value):
 
       
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=False) 
