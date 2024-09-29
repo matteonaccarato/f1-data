@@ -1,22 +1,22 @@
-# F1-DATA
+# 📊 F1-DATA - Quick intro
+Dashboard to Analyze data about Formula 1 <br>
+**💻 DEPLOY [https://f1-data.onrender.com/](https://f1-data.onrender.com/)** <br>
 
-Dashboard to Analyze data about Formula 1.
-For a proper presentation we suggest to view <a href="https://github.com/f1saw/f1-data/blob/main/F1-ARD.pdf">F1-ARD</a>
-
+### What you can do
+📊 Navigate through **STATISTICS** (Seasons, Circuits, Drivers, Teams) - from 1950 to today
 <hr>
 
 ### How
+🧑‍💻 Python <br>
+📄 [f1db](https://github.com/f1db/f1db) 
 
-Python<br>
-[f1db](https://github.com/f1db/f1db) (dataset)
+<hr>
 
 ### USAGE
-
-- `pip install pandas plotly dash dash_bootstrap_components`
-- `git clone https://github.com/f1saw/f1-data.git`
-- `cd f1-data`
-- `python app.py`
-- Go to `http://127.0.0.1:8050/`
+ `pip install pandas plotly dash dash_bootstrap_components`
+### `python app.py`
+Runs the script locally. <br>
+Open [http://127.0.0.1:8050/](http://127.0.0.1:8050/) to view it in the browser
 
 <hr>
 
