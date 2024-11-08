@@ -4,7 +4,7 @@
 "ain-diab","Ain-Diab","Ain-Diab Circuit",,"ROAD","Casablanca","morocco",33.578611,-7.6875,1
 "aintree","Aintree","Aintree Motor Racing Circuit",,"ROAD","Aintree","united-kingdom",53.476944,-2.940556,5
 "anderstorp","Anderstorp Raceway","Anderstorp Raceway","Scandinavian Raceway","RACE","Anderstorp","sweden",57.264167,13.601389,6
-"austin","Americas","Circuit of the Americas",,"RACE","Austin","united-states-of-america",30.132778,-97.641111,11
+"austin","Americas","Circuit of the Americas",,"RACE","Austin","united-states-of-america",30.132778,-97.641111,12
 "avus","AVUS","AVUS",,"ROAD","Berlin","germany",52.480556,13.251389,1
 "bahrain","Bahrain","Bahrain International Circuit",,"RACE","Sakhir","bahrain",26.0325,50.510556,21
 "baku","Baku","Baku City Circuit",,"STREET","Baku","azerbaijan",40.3725,49.853333,8
@@ -27,7 +27,7 @@
 "hungaroring","Hungaroring","Hungaroring",,"RACE","Budapest","hungary",47.582222,19.251111,39
 "imola","Enzo e Dino Ferrari","Autodromo Internazionale Enzo e Dino Ferrari","Autodromo Dino Ferrari","RACE","Imola","italy",44.341111,11.713333,31
 "indianapolis","Indianapolis","Indianapolis Motor Speedway",,"RACE","Indianapolis","united-states-of-america",39.798333,-86.232778,19
-"interlagos","José Carlos Pace","Autódromo José Carlos Pace","Interlagos","RACE","São Paulo","brazil",-23.701111,-46.697222,40
+"interlagos","José Carlos Pace","Autódromo José Carlos Pace","Interlagos","RACE","São Paulo","brazil",-23.701111,-46.697222,41
 "istanbul","Istanbul Park","Istanbul Park","Istanbul Otodrom","RACE","Istanbul","turkey",40.951667,29.405,9
 "jacarepagua","Nelson Piquet","Autódromo Internacional Nelson Piquet","Jacarepaguá","RACE","Rio de Janeiro","brazil",-22.975556,-43.395,10
 "jarama","Jarama","Circuito del Jarama","Circuito Permanente del Jarama","RACE","Madrid","spain",40.617111,-3.585583,9
@@ -40,7 +40,7 @@
 "magny-cours","Magny-Cours","Circuit de Nevers Magny-Cours",,"RACE","Nevers","france",46.863242,3.164228,18
 "marina-bay","Marina Bay","Marina Bay Street Circuit",,"STREET","Singapore","singapore",1.291531,103.86385,15
 "melbourne","Melbourne","Melbourne Grand Prix Circuit","Albert Park Circuit","STREET","Melbourne","australia",-37.849722,144.968333,27
-"mexico-city","Hermanos Rodríguez","Autódromo Hermanos Rodríguez","Autódromo Ricardo Rodríguez","RACE","Mexico City","mexico",19.404197,-99.088747,23
+"mexico-city","Hermanos Rodríguez","Autódromo Hermanos Rodríguez","Autódromo Ricardo Rodríguez","RACE","Mexico City","mexico",19.404197,-99.088747,24
 "miami","Miami","Miami International Autodrome",,"STREET","Miami Gardens","united-states-of-america",25.958056,-80.238889,3
 "monaco","Monaco","Circuit de Monaco",,"STREET","Monte Carlo","monaco",43.734722,7.420556,70
 "monsanto","Monsanto","Circuito de Monsanto",,"STREET","Lisbon","portugal",38.719722,-9.203056,1

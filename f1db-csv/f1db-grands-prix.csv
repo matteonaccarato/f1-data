@@ -7,7 +7,7 @@
 "azerbaijan","Azerbaijan","Azerbaijan Grand Prix","Azerbaijan GP","AZE","azerbaijan",7
 "bahrain","Bahrain","Bahrain Grand Prix","Bahrain GP","BHR","bahrain",20
 "belgium","Belgium","Belgian Grand Prix","Belgian GP","BEL","belgium",69
-"brazil","Brazil","Brazilian Grand Prix","Brazilian GP","BRA","brazil",50
+"brazil","Brazil","Brazilian Grand Prix","Brazilian GP","BRA","brazil",47
 "caesars-palace","Caesars Palace","Caesars Palace Grand Prix","Caesars Palace GP","CAE","united-states-of-america",2
 "canada","Canada","Canadian Grand Prix","Canadian GP","CAN","canada",53
 "china","China","Chinese Grand Prix","Chinese GP","CHN","china",17
@@ -28,7 +28,7 @@
 "las-vegas","Las Vegas","Las Vegas Grand Prix","Las Vegas GP","LAS","united-states-of-america",1
 "luxembourg","Luxembourg","Luxembourg Grand Prix","Luxembourg GP","LUX","luxembourg",2
 "malaysia","Malaysia","Malaysian Grand Prix","Malaysian GP","MYS","malaysia",19
-"mexico","Mexico","Mexican Grand Prix","Mexican GP","MEX","mexico",23
+"mexico","Mexico","Mexican Grand Prix","Mexican GP","MEX","mexico",24
 "miami","Miami","Miami Grand Prix","Miami GP","MIA","united-states-of-america",3
 "monaco","Monaco","Monaco Grand Prix","Monaco GP","MCO","monaco",70
 "morocco","Morocco","Moroccan Grand Prix","Moroccan GP","MAR","morocco",1
@@ -40,6 +40,7 @@
 "russia","Russia","Russian Grand Prix","Russian GP","RUS","russia",8
 "sakhir","Sakhir","Sakhir Grand Prix","Sakhir GP","SAK","bahrain",1
 "san-marino","San Marino","San Marino Grand Prix","San Marino GP","SMR","san-marino",26
+"sao-paulo","São Paulo","São Paulo Grand Prix","São Paulo GP","SAO","brazil",4
 "saudi-arabia","Saudi Arabia","Saudi Arabian Grand Prix","Saudi Arabian GP","SAU","saudi-arabia",4
 "singapore","Singapore","Singapore Grand Prix","Singapore GP","SGP","singapore",15
 "south-africa","South Africa","South African Grand Prix","South African GP","ZAF","south-africa",23
@@ -50,4 +51,4 @@
 "turkey","Turkey","Turkish Grand Prix","Turkish GP","TUR","turkey",9
 "tuscany","Tuscany","Tuscan Grand Prix","Tuscan GP","TUS","italy",1
 "united-states-west","United States West","United States Grand Prix West","United States GP West","USA","united-states-of-america",8
-"united-states","United States","United States Grand Prix","United States GP","USA","united-states-of-america",44
+"united-states","United States","United States Grand Prix","United States GP","USA","united-states-of-america",45
