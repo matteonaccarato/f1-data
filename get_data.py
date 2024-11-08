@@ -26,7 +26,6 @@ def get_data():
     url = f'https://github.com/f1db/f1db/releases/download/{last_version}/f1db-csv.zip'
 
     try:
-        download(url, last_version) # always download on server
         with open(last_version_file, 'r') as file:
             content = file.read().strip()
         
