@@ -4,9 +4,10 @@
 
 import pandas as pd
 import plotly.express as px
-from dash import Dash, dcc, html, Input, Output, callback
+from dash import Dash, dcc, html, Input, Output, State, callback, no_update
 import dash_bootstrap_components as dbc
 import numpy as np
+from time import time
 
 import get_data
 
@@ -21,7 +22,10 @@ import backend.circuits as circuits
 import backend.teams as teams
 import backend.f1db_utils as f1db_utils
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=[
+    dbc.themes.BOOTSTRAP, 
+    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+], suppress_callback_exceptions=True)
 server = app.server
 
 # TABS STRUCTURE
@@ -39,11 +43,33 @@ for idx, tab in enumerate(tabs):
 
 # LAYOUT BUILDER
 app.layout = html.Div([
-    html.H1([
-        html.Span('F1', style={'color': 'red'}), 
-        html.Span('-DATA', style={'color': 'white'}),
-    ],className="text-center fw-bold m-0 pt-2"),
-    #html.Hr(),
+    dcc.Location(id='update-data-location', refresh=True),
+    html.Div([
+        html.H1([
+            html.Span('F1', style={'color': 'red'}), 
+            html.Span('-DATA', style={'color': 'white'}),
+        ], className="fw-bold m-0 pt-2"),
+        html.Div([
+            dbc.Button(
+                [
+                    html.I(className="bi bi-arrow-clockwise me-2"),
+                    "Update Data"
+                ],
+                id="update-data-btn",
+                color="danger",
+                size="sm",
+                className="mt-2"
+            ),
+            html.Div(
+                id="update-data-status",
+                className="update-data-status mt-1"
+            )
+        ], className="d-flex flex-column align-items-end"),
+        # html.Div([
+        #     dbc.Button("Update Data", id="update-data-btn", color="danger", size="sm", className="mt-2"),
+        #     html.Div(id="update-data-status", className="update-data-status mt-1")
+        # ], className="d-flex flex-column align-items-end")
+    ], className="d-flex justify-content-between align-items-start"),
     html.Div([
         dcc.Tabs(id="tabs-graph", 
             value=tabs_children[STARTING_TAB].value, 
@@ -59,6 +85,28 @@ app.layout = html.Div([
 
 
 ## CALLBACKS
+@callback(
+    [Output("update-data-status", "children"),
+     Output("update-data-location", "href")],
+    Input("update-data-btn", "n_clicks"),
+    State("update-data-location", "href"),
+    prevent_initial_call=True
+)
+def update_csv_data(n_clicks, current_href):
+    if not n_clicks:
+        return [no_update, no_update]
+
+    result = get_data.get_data()
+    if not result["ok"]:
+        return [f'Update failed: {result["message"]}', no_update]
+
+    if result["updated"]:
+        refreshed_url = f'{current_href.split("?")[0] if current_href else "/"}?dataRefresh={int(time())}'
+        return [f'Data updated ({result["version"]}). Reloading...', refreshed_url]
+
+    return [result["message"], no_update]
+
+
 @callback(Output('tabs-content-graph', 'children'),
             Input('tabs-graph', 'value'))
 def render_content(tab):
@@ -102,7 +150,7 @@ def render_content(tab):
                             dbc.Col(html.Label("Min Value"), width=3),
                             dbc.Col(frontend.circuits.circuits_gp_held_min_value, width=9) 
                         ], className="d-flex justify-content-center", width=2),
-                        dbc.Col(frontend.circuits.circuits_dropdown, width=4),
+                        dbc.Col(frontend.circuits.create_circuits_dropdown(), width=4),
                         dbc.Col([
                             html.Label("Qualifying Position Range"),
                             frontend.circuits.quali_race_range
@@ -117,8 +165,8 @@ def render_content(tab):
         case 'tab-2-drivers':
             return html.Div([
                 dbc.Row([
-                    dbc.Col(dcc.Graph(id='drivers-line', figure=frontend.drivers.drivers_figures['numDriversPerYear'], className="h-100"), width=6),
-                    dbc.Col(dcc.Graph(id="drivers-world", figure=frontend.drivers.drivers_figures['worldSpread'], className="h-100"), width=6)
+                    dbc.Col(dcc.Graph(id='drivers-line', figure=frontend.drivers.get_num_drivers_figure(), className="h-100"), width=6),
+                    dbc.Col(dcc.Graph(id="drivers-world", figure=frontend.drivers.get_world_spread_figure(), className="h-100"), width=6)
                 ], className="graph-section-circuits"),
                 html.Br(),
                 dbc.Stack([
@@ -141,7 +189,7 @@ def render_content(tab):
                                     ]),
                                     frontend.drivers.drivers_performance_min_value 
                                 ], id="drivers-min-value-id", width=12),
-                                dbc.Col(frontend.drivers.drivers_performance_dropdown, width=12, style={"max-width":"100px;"})
+                                dbc.Col(frontend.drivers.create_drivers_performance_dropdown(), width=12, style={"max-width":"100px;"})
                             ])
                         ], className="d-flex gap-4"),
                     ]),
@@ -438,14 +486,11 @@ def update_drivers_performance(graph_type, performance_type, min_value, selected
     hover_data = {}
     max_val = 0
     if (graph_type == "absolute"):
-        if (performance_type == drivers.PERFORMANCE_TYPE_DEFAULT and min_value == drivers.MIN_VALUE_DEFAULT):
-            df = drivers.dfs["absolutePerformance"] # standard values, use the one already computed
-        else:
-            df = drivers.getAbsolutePerformance(
-                performance_type, 
-                min_value, 
-                "count_podiums" if performance_type == f1db_utils.PerformanceType.PODIUMS.value else "count_position_1"
-            )
+        df = drivers.getAbsolutePerformance(
+            performance_type, 
+            min_value, 
+            "count_podiums" if performance_type == f1db_utils.PerformanceType.PODIUMS.value else "count_position_1"
+        )
         
         title = f"Most F1 {drivers.labels_dict[performance_type]}"
         match performance_type:

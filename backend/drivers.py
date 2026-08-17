@@ -219,9 +219,9 @@ def getTrendPerformance(selected_drivers, performanceType):
     return df
 
 
-# Default Drivers DataFrames
-dfs = {
-    "numDriversPerYear": getNumDriversPerYear(),
-    "worldSpread": getWorldSpread(),
-    "absolutePerformance": getAbsolutePerformance(PERFORMANCE_TYPE_DEFAULT, MIN_VALUE_DEFAULT, COL_TO_APPLY_MIN_DEFAULT)
-}
+def getDefaultDataFrames():
+    return {
+        "numDriversPerYear": getNumDriversPerYear(),
+        "worldSpread": getWorldSpread(),
+        "absolutePerformance": getAbsolutePerformance(PERFORMANCE_TYPE_DEFAULT, MIN_VALUE_DEFAULT, COL_TO_APPLY_MIN_DEFAULT)
+    }

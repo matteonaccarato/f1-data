@@ -17,6 +17,7 @@ Dashboard to Analyze data about Formula 1 <br>
 ### `python app.py`
 Runs the script locally. <br>
 Open [http://127.0.0.1:8050/](http://127.0.0.1:8050/) to view it in the browser
+Use the **Update Data** button (top-right) to fetch the latest F1DB CSV release and reload the dashboard with refreshed data.
 
 <hr>
 

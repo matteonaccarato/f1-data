@@ -67,3 +67,31 @@ H1 {
 .Select--multi .Select-value {
     color: white;
 }
+
+/* Dash >=3 dropdown/selectors (React Select v2+) */
+.dash-dropdown .Select-control,
+.dash-dropdown .Select-menu-outer,
+.dash-dropdown .VirtualizedSelectOption,
+.dash-dropdown .VirtualizedSelectFocusedOption {
+    background-color: white;
+    color: rgb(33, 37, 41);
+}
+
+.dash-dropdown .Select-placeholder,
+.dash-dropdown .Select-value-label,
+.dash-dropdown .Select-input>input {
+    color: rgb(33, 37, 41) !important;
+}
+
+/* Strong override for Dash dropdown text in newer releases */
+.dash-dropdown,
+.dash-dropdown * {
+    color: rgb(33, 37, 41) !important;
+}
+
+.update-data-status {
+    color: #adb5bd !important;
+    font-size: 0.8rem;
+    text-align: right;
+    max-width: 20rem;
+}

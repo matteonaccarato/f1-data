@@ -30,49 +30,51 @@ def format_driver_info(driver_info):
 # ===========================================
     
     
-# DRIVERS' world figure update (formatting)
-driver_info = drivers.dfs["worldSpread"].groupby(['nationalityCountryId','year']).apply(
-    lambda x: [{'driverName': row['driverName']} for idx, row in x.iterrows()]
-).reset_index(name='driverInfo')
-drivers.dfs["worldSpread"] = pd.merge(drivers.dfs["worldSpread"], driver_info, on=['nationalityCountryId','year'], how="left")
-drivers.dfs["worldSpread"]['driverInfo'] = drivers.dfs["worldSpread"]['driverInfo'].apply(format_driver_info)
-drivers.dfs["worldSpread"].sort_values(by="year", inplace=True)
+def get_num_drivers_figure():
+    return (
+        px.line(
+            drivers.getNumDriversPerYear(),
+            x = "year",
+            y = ["officialDriver","testDriver"],
+            markers = True,
+            color_discrete_sequence=f1db_utils.custom_colors,
+            labels = {
+                "value": "Number of Drivers",
+                "variable": "Driver Type",
+                "year": "Year"
+            },
+            hover_data = {
+                "variable": False,
+                "year": False
+            },
+            template = f1db_utils.template
+        ).for_each_trace(lambda t: t.update(name = drivers.driver_type[t.name]))
+        .update_layout(
+            f1db_utils.transparent_bg,
+            title = f1db_utils.getTitleObj("Number of Official Drivers and Test Drivers Over the Years"),
+            hovermode = "x",
+            margin=f1db_utils.margin
+        ).update_traces(
+            hoverlabel = f1db_utils.getHoverlabel(13),
+            hovertemplate="<b>%{y}</b><extra></extra>"
+        )
+    )
 
-# ====================DRIVERs STATIC FIGURES'=======================
-drivers_figures = {
-    # UP-LEFT GRAPH (Number of Drivers)
-    "numDriversPerYear" : px.line(
-        drivers.dfs["numDriversPerYear"],
-        x = "year",
-        y = ["officialDriver","testDriver"],
-        markers = True,
-        color_discrete_sequence=f1db_utils.custom_colors,
-        labels = {
-            "value": "Number of Drivers",
-            "variable": "Driver Type",
-            "year": "Year"
-        },
-        hover_data = {
-            "variable": False,
-            "year": False
-        },
-        template = f1db_utils.template
-    ).for_each_trace(lambda t: t.update(name = drivers.driver_type[t.name]))
-    .update_layout(
-        f1db_utils.transparent_bg,
-        title = f1db_utils.getTitleObj("Number of Official Drivers and Test Drivers Over the Years"),
-        hovermode = "x",
-        margin=f1db_utils.margin
-    ).update_traces(
-        hoverlabel = f1db_utils.getHoverlabel(13),
-        hovertemplate="<b>%{y}</b><extra></extra>"
-    ),
-    # UP-RIGHT GRAPH (Distribution of Drivers' Nationalities)
-    "worldSpread": px.scatter_geo(
-        drivers.dfs["worldSpread"], 
-        locations = "alpha3Code", 
+
+def get_world_spread_figure():
+    world_spread_df = drivers.getWorldSpread()
+    driver_info = world_spread_df.groupby(['nationalityCountryId', 'year']).apply(
+        lambda x: [{'driverName': row['driverName']} for _, row in x.iterrows()]
+    ).reset_index(name='driverInfo')
+    world_spread_df = pd.merge(world_spread_df, driver_info, on=['nationalityCountryId', 'year'], how="left")
+    world_spread_df['driverInfo'] = world_spread_df['driverInfo'].apply(format_driver_info)
+    world_spread_df.sort_values(by="year", inplace=True)
+
+    fig = px.scatter_geo(
+        world_spread_df,
+        locations = "alpha3Code",
         color = "continentName",
-        hover_name = "countryName", 
+        hover_name = "countryName",
         size = "count_display",
         animation_frame = "year",
         projection = "natural earth",
@@ -86,12 +88,12 @@ drivers_figures = {
             "year": False
         },
         color_discrete_map = {
-            'Africa': "rgb(99, 110, 250)", 
-            'Antarctica': "rgb(239, 85, 59)", 
-            'Asia': "rgb(0, 204, 150)", 
+            'Africa': "rgb(99, 110, 250)",
+            'Antarctica': "rgb(239, 85, 59)",
+            'Asia': "rgb(0, 204, 150)",
             "Europe": "rgb(247,1,0)",
-            'Australia': "rgb(171, 99, 250)", 
-            'North America': "rgb(25, 211, 243)", 
+            'Australia': "rgb(171, 99, 250)",
+            'North America': "rgb(25, 211, 243)",
             'South America': "rgb(254, 203, 82)"
         },
         category_orders = f1db_utils.continents_order,
@@ -101,18 +103,17 @@ drivers_figures = {
         margin=f1db_utils.margin_geo,
         title = f1db_utils.getTitleObj("Distribution of Drivers' Nationalities Over the Years"),
     ).update_geos(f1db_utils.update_geos)
-}
 
-CUSTOM_HOVERTEMPLATE = '<b>%{customdata[0]}</b>, %{customdata[1]}<br><br><b>%{customdata[2]}</b><br>%{customdata[3]}<extra></extra>'
-drivers_figures["worldSpread"].update_traces(
-    hoverlabel=f1db_utils.getHoverlabel(13),
-    hovertemplate=CUSTOM_HOVERTEMPLATE
-)
-for frame in drivers_figures["worldSpread"].frames:
-    for data in frame.data:
-        data.hovertemplate = CUSTOM_HOVERTEMPLATE
-        
-# ===========================================       
+    custom_hovertemplate = '<b>%{customdata[0]}</b>, %{customdata[1]}<br><br><b>%{customdata[2]}</b><br>%{customdata[3]}<extra></extra>'
+    fig.update_traces(
+        hoverlabel=f1db_utils.getHoverlabel(13),
+        hovertemplate=custom_hovertemplate
+    )
+    for frame in fig.frames:
+        for data in frame.data:
+            data.hovertemplate = custom_hovertemplate
+
+    return fig
         
         
 # ===================UI========================    
@@ -147,16 +148,17 @@ drivers_performance_min_value = dcc.Slider(
     tooltip={"placement": "bottom", "always_visible": True}
 ) 
 
-drivers_performance_dropdown = dcc.Dropdown(
-    id="drivers-performance-dropdown",
-    options=[{"label":row["driverName"], "value": row["driverId"]} for row in drivers.getDrivers(drivers.PERFORMANCE_TYPE_DEFAULT).to_dict(orient="records")],
-    placeholder="Select a Driver",
-    searchable=True,
-    clearable=False,
-    multi=True,
-    maxHeight=200,
-    value=["lewis-hamilton","max-verstappen","sebastian-vettel"]  # "michael-schumacher"] 
-)    
+def create_drivers_performance_dropdown():
+    return dcc.Dropdown(
+        id="drivers-performance-dropdown",
+        options=[{"label": row["driverName"], "value": row["driverId"]} for row in drivers.getDrivers(drivers.PERFORMANCE_TYPE_DEFAULT).to_dict(orient="records")],
+        placeholder="Select a Driver",
+        searchable=True,
+        clearable=False,
+        multi=True,
+        maxHeight=200,
+        value=["lewis-hamilton", "max-verstappen", "sebastian-vettel"]  # "michael-schumacher"]
+    )
 
 drivers_color_map = {
     "Lewis Hamilton": "#D626FF",
