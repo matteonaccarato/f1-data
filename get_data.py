@@ -39,7 +39,7 @@ def get_data():
             "message": f"Unable to fetch latest release: {err}"
         }
 
-    if "name" not in data:
+    if "tag_name" not in data:
         return {
             "ok": False,
             "updated": False,
@@ -47,7 +47,7 @@ def get_data():
             "message": "Latest release payload does not include a version name."
         }
 
-    last_version = data["name"]
+    last_version = data["tag_name"]
     print(f"f1-data > Fetching Version\t\t({last_version})")
     url = f'https://github.com/f1db/f1db/releases/download/{last_version}/f1db-csv.zip'
 
